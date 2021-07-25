@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 router.get("/id/:id", async (req, res) => {
     try{
         const bus = await Bus.findById(req.params.id).lean().exec();
-        res.status(400).json({bus})
+        res.status(200).json({bus})
     } catch (err) {
         res.status(400).json({message: err.message})
     }
