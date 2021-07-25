@@ -11,10 +11,11 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:2244/auth/google/callback"
   },
   async function(accessToken, refreshToken, profile, done) {
+    //const name = profile?._json?.name
       let user = await User.findOne({email: profile?._json?.email})
     let token;
     if(!user) {
-      user = await User.create({email: profile?._json?.email, password: uuidv4()})
+      user = await User.create({email: profile?._json?.email, password: uuidv4(), name: profile?._json?.name})
     }
     token  = newToken(user)
     return done(null, {user, token})

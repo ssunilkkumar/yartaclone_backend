@@ -30,7 +30,8 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
       const {user, token} = req.user;
-      res.status(200).json({user, token})
+      return res.redirect("/")
+      //res.status(200).json({user, token})
   });
 
 app.post("/signup", signup);

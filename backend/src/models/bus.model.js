@@ -7,6 +7,7 @@ const busSchema = new mongoose.Schema({
     fare: {type: String, required: true},
     departtime: {type: String, required: true},
     arrivaltime: {type: String, required: true},
+    duration: {type: String, required: true},
     date: {type: String, required: true},
     bustype: {type: String, required: true},
     totalseat: {type: Number, required: true},

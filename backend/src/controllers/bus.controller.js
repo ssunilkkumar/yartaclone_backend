@@ -33,6 +33,15 @@ router.get("/route", async (req, res) => {
     }
 })
 
+router.get("/bookedseat/:id", async (req, res) => {
+    try{
+        const booked = await Bus.findById(req.params.id).lean().exec();
+        res.status(200).json({booked})
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
+
 router.post("/", async (req, res) => {
     const bus = await Bus.create(req.body);
 
@@ -42,7 +51,7 @@ router.post("/", async (req, res) => {
 router.patch("/:id/update", async (req, res) => {
     try{
         const bus = await Bus.findByIdAndUpdate(req.params.id, req.body, {new: true})
-        res.status(400).json({bus})
+        res.status(201).json({bus})
     } catch (err) {
         res.status(400).json({message: err.message})
     }
@@ -51,7 +60,7 @@ router.patch("/:id/update", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     try {
         const bus = await Bus.findByIdAndDelete(req.params.id)
-        res.status(400).json({bus})
+        res.status(204).json({bus})
     } catch (err) {
         res.status(400).json({message: err.message})
 
