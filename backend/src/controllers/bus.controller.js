@@ -33,6 +33,15 @@ router.get("/route", async (req, res) => {
     }
 })
 
+router.get("/bookedseat/:id", async (req, res) => {
+    try{
+        const booked = await Bus.findById(req.params.id).lean().exec();
+        res.status(200).json({booked})
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+})
+
 router.post("/", async (req, res) => {
     const bus = await Bus.create(req.body);
 

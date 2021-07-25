@@ -19,14 +19,15 @@ router.get("/id/:id", async (req, res) => {
     }
 })
 
-router.get("/cities", async (req, res) => {
+router.get("/points", async (req, res) => {
+    const city = req.query.city
+    const busId = req.query.busId
     try{
-        const all = []
-        const stop = await Stop.find().select("city").lean().exec();
-        stop.forEach(el => {
-            all.push(el.city)
-        })
-        res.status(400).json({all})
+        
+        const stops = await Stop.findOne({$and: [{"busId._id": busId}, {"city": city}]}).lean().exec();
+        //console.log(stops.points)
+       
+        res.status(400).json({points: stops.points})
     } catch (err) {
         res.status(400).json({message: err.message})
     }
@@ -37,6 +38,8 @@ router.post("/", async (req, res) => {
 
     return res.status(201).json({data: stop})
 })
+
+
 
 router.patch("/:id/update", async (req, res) => {
     try{
